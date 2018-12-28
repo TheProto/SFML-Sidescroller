@@ -7,10 +7,12 @@
 //#include "InputManager.h"
 
 #include "Engine/Game.h"
+#include "Engine/DEFINITIONS.h"
 
 int main(int argc, char* argv[])
 {
-	ProtoEngine::Game(800, 600, "SFML Starter");
+	ProtoEngine::Game(SCREEN_HEIGHT, SCREEN_WIDTH, "PlatformerGame");
+
 	/*
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 	sf::CircleShape shape(100.f);
@@ -34,8 +36,6 @@ int main(int argc, char* argv[])
 		window.display();
 	}
 	*/
-
-
 
 	return EXIT_SUCCESS;
 	system("PAUSE");
