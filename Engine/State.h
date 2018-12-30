@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 namespace ProtoEngine
 {
 	class State {
@@ -10,5 +11,11 @@ namespace ProtoEngine
 
 		virtual void Pause() {}
 		virtual void Resume() {}
+
+		std::string get_name();
+		void set_name(std::string stateName);
+
+	private:
+		std::string _stateName;
 	};
 }

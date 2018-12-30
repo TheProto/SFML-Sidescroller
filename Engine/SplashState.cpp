@@ -1,11 +1,14 @@
 #pragma once
 #include "SplashState.h"
 #include "DEFINITIONS.h"
+#include "MainMenuState.h"
 #include <sstream>
 #include <iostream>
 
 namespace ProtoEngine {
 	SplashState::SplashState(GameDataRef data) : _data(data) {
+		//_data->machine.GetActiveState()->set_name("SplashState");
+		this->set_name("SplashState");
 	}
 
 	void SplashState::Init() {
@@ -24,7 +27,8 @@ namespace ProtoEngine {
 
 	void SplashState::Update(float dt) {
 		if (_clock.getElapsedTime().asSeconds() > SPLASH_STATE_SHOW_TIME) {
-			std::cout << "Go To Main Menu" << std::endl;
+			//std::cout << "Go To Main Menu" << std::endl;
+			_data->machine.AddState(StateRef(new MainMenuState(_data)), true);
 		}
 	}
 

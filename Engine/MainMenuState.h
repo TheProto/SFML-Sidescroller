@@ -4,10 +4,10 @@
 #include "Game.h"
 
 namespace ProtoEngine {
-	class SplashState : public State
+	class MainMenuState : public State
 	{
 	public:
-		SplashState(GameDataRef data);
+		MainMenuState(GameDataRef data);
 
 		void Init();
 
@@ -17,11 +17,12 @@ namespace ProtoEngine {
 
 	private:
 		GameDataRef _data;
-		
+
 		sf::Clock _clock;
 
-//		sf::Texture _backgroundTexture;
 		sf::Sprite _background;
+		sf::Sprite _title;
+		sf::Sprite _playButton;
 	};
 }
 

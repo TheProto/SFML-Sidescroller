@@ -11,7 +11,7 @@
 
 int main(int argc, char* argv[])
 {
-	ProtoEngine::Game(SCREEN_HEIGHT, SCREEN_WIDTH, "PlatformerGame");
+	ProtoEngine::Game(SCREEN_WIDTH, SCREEN_HEIGHT, "PlatformerGame");
 
 	/*
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
