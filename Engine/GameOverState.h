@@ -1,15 +1,13 @@
 #pragma once
 #include <SFML\Graphics.hpp>
-#include <SFML\System\Vector2.hpp>
-#include "SpriteIndex.h"
 #include "State.h"
 #include "Game.h"
 
 namespace ProtoEngine {
-	class GameState : public State
+	class GameOverState : public State
 	{
 	public:
-		GameState(GameDataRef data);
+		GameOverState(GameDataRef data);
 
 		void Init();
 
@@ -23,7 +21,6 @@ namespace ProtoEngine {
 		sf::Clock _clock;
 
 		sf::Sprite _background;
-		SpriteIndex _spriteSheet;
 	};
 }
 
