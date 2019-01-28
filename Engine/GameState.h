@@ -2,6 +2,8 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\System\Vector2.hpp>
 #include "SpriteIndex.h"
+#include "LevelManager.h"
+#include "MovementManager.h"
 #include "State.h"
 #include "Game.h"
 
@@ -13,7 +15,7 @@ namespace ProtoEngine {
 
 		void Init();
 
-		void HandleInput();
+		void HandleInput(float dt);
 		void Update(float dt);
 		void Draw(float dt);
 
@@ -24,6 +26,8 @@ namespace ProtoEngine {
 
 		sf::Sprite _background;
 		SpriteIndex _spriteSheet;
+		LevelManager _level;
+		MovementManager *_hero;
 	};
 }
 

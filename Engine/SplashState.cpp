@@ -14,9 +14,13 @@ namespace ProtoEngine {
 	void SplashState::Init() {
 		_data->assets.LoadTexture("Splash State Background", SPLASH_SCENE_BACKGROUND_FILEPATH);
 		_background.setTexture(this->_data->assets.GetTexture("Splash State Background"));
+		sf::Vector2f splashTransform;
+		splashTransform.x = PLAYER_VIEW_WIDTH / _background.getGlobalBounds().width;
+		splashTransform.y = PLAYER_VIEW_HEIGHT / _background.getGlobalBounds().height;
+		_background.setScale(splashTransform);
 	}
 
-	void SplashState::HandleInput() {
+	void SplashState::HandleInput(float dt) {
 		sf::Event event;
 		while (_data->window.pollEvent(event)) {
 			if (sf::Event::Closed == event.type) {
@@ -34,6 +38,10 @@ namespace ProtoEngine {
 
 	void SplashState::Draw(float dt) {
 		_data->window.clear();
+//		playerViewCenter =_data->playerView.getCenter();
+//		_background.setPosition((playerViewCenter.x - PLAYER_VIEW_WIDTH/2),
+//								(playerViewCenter.y - PLAYER_VIEW_HEIGHT/2));
+
 		_data->window.draw(_background);
 		_data->window.display();
 	}

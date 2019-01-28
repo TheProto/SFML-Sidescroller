@@ -12,6 +12,7 @@ namespace ProtoEngine
 	struct GameData {
 		StateMachine  machine;
 		sf::RenderWindow window;
+		sf::View playerView;
 		AssetManager assets;
 		InputManager input;
 	};

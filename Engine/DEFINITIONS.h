@@ -1,9 +1,12 @@
 #pragma once
 
-#define SCREEN_WIDTH 480
-#define SCREEN_HEIGHT 640
+#define SCREEN_WIDTH 1280	
+#define SCREEN_HEIGHT 1024
 
-#define SPLASH_STATE_SHOW_TIME 3.0
+#define PLAYER_VIEW_HEIGHT 480
+#define PLAYER_VIEW_WIDTH 800
+
+#define SPLASH_STATE_SHOW_TIME 0.5
 #define SPLASH_SCENE_BACKGROUND_FILEPATH "Resources/res/SplashBackground.png"
 
 //MenuState

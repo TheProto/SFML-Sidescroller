@@ -17,7 +17,7 @@ namespace ProtoEngine {
 
 	}
 
-	void GameOverState::HandleInput() {
+	void GameOverState::HandleInput(float dt) {
 
 		sf::Event event;
 

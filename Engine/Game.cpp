@@ -1,11 +1,16 @@
 #include "Game.h"
 #include <iostream>
 #include "SplashState.h"
+#include "Definitions.h"
 
 namespace ProtoEngine
 {
 	Game::Game(int width, int height, std::string title) {
 		_data->window.create(sf::VideoMode(width, height),title, sf::Style::Close | sf::Style::Titlebar);
+		_data->playerView.setSize(sf::Vector2f(PLAYER_VIEW_WIDTH, PLAYER_VIEW_HEIGHT));
+		_data->playerView.setCenter((PLAYER_VIEW_WIDTH / 2), (PLAYER_VIEW_HEIGHT / 2));
+		_data->playerView.zoom(1);
+		_data->window.setView(_data->playerView);
 		_data->machine.AddState(StateRef(new SplashState(this->_data)));
 
 		this->Run();
@@ -31,7 +36,7 @@ namespace ProtoEngine
 			accumulator += frameTime;
 
 			while (accumulator >= dt) {
-				this->_data->machine.GetActiveState()->HandleInput();
+				this->_data->machine.GetActiveState()->HandleInput(dt);
 				this->_data->machine.GetActiveState()->Update(dt);
 
 				accumulator -= dt;

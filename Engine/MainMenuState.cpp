@@ -21,15 +21,24 @@ namespace ProtoEngine {
 		_playButton.setTexture(this->_data->assets.GetTexture("PlayButton"));
 
 //	Positioning Spirites;
+/*
 		_title.setPosition( (SCREEN_WIDTH / 2) - (_title.getGlobalBounds().width/2),  
 			(_title.getGlobalBounds().height / 2));
 
 		_playButton.setPosition((SCREEN_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2),
 			(SCREEN_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2));
 
+			*/
+		_title.setPosition((PLAYER_VIEW_WIDTH / 2) - (_title.getGlobalBounds().width / 2),
+			(_title.getGlobalBounds().height / 2));
+
+			
+		_playButton.setPosition((PLAYER_VIEW_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2),
+			(PLAYER_VIEW_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2));
+
 	}
 
-	void MainMenuState::HandleInput() {
+	void MainMenuState::HandleInput(float dt) {
 
 		sf::Event event;
 
@@ -53,6 +62,7 @@ namespace ProtoEngine {
 
 	void MainMenuState::Draw(float dt) {
 		this->_data->window.clear();
+		//_background.set
 		this->_data->window.draw(_background);
 		this->_data->window.draw(_title);
 		this->_data->window.draw(_playButton);
