@@ -40,6 +40,7 @@ namespace ProtoEngine {
 
 				position.x += spriteSize;
 				//position.y += spriteSize;
+				_spriteCount++;
 			}
 			else
 			{
@@ -49,8 +50,14 @@ namespace ProtoEngine {
 		}
 		return 0;
 	}
+
+	int SpriteIndex::getSpriteCount() {
+		//return _spriteCount;
+		return _SpIndex.size();
+	}
 	
 	sf::Sprite SpriteIndex::getSpriteId(int id) {
+		//printf("Requesting Sprite with id = %d", id);
 		return _SpIndex.at(id);
 	}
 }

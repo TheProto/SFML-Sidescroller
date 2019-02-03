@@ -13,12 +13,19 @@ namespace ProtoEngine {
 
 	void MainMenuState::Init() {
 		this->_data->assets.LoadTexture("MainMenu Background", MAIN_MENU_BACKGROUND_FILEPATH);
-		this->_data->assets.LoadTexture("GameTitle", GAME_TITLE_FILEPATH);
+		//this->_data->assets.LoadTexture("GameTitle", GAME_TITLE_FILEPATH);
 		this->_data->assets.LoadTexture("PlayButton", PLAY_BUTTON_FILEPATH);
+		//this->_data->playerView.zoom(10);
 
 		_background.setTexture(this->_data->assets.GetTexture("MainMenu Background"));
-		_title.setTexture(this->_data->assets.GetTexture("GameTitle"));
+		//_title.setTexture(this->_data->assets.GetTexture("GameTitle"));
 		_playButton.setTexture(this->_data->assets.GetTexture("PlayButton"));
+
+		this->_data->playerView.setSize(MENU_VIEW_WIDTH, MENU_VIEW_HEIGHT);
+		this->_data->playerView.setCenter(sf::Vector2f(690, 640));
+		this->_data->playerView.zoom(1.3);
+		this->_data->window.setView(this->_data->playerView);
+
 
 //	Positioning Spirites;
 /*
@@ -29,12 +36,13 @@ namespace ProtoEngine {
 			(SCREEN_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2));
 
 			*/
-		_title.setPosition((PLAYER_VIEW_WIDTH / 2) - (_title.getGlobalBounds().width / 2),
+		/*
+		_title.setPosition((MENU_VIEW_WIDTH / 2) - (_title.getGlobalBounds().width / 2),
 			(_title.getGlobalBounds().height / 2));
-
+			*/
 			
-		_playButton.setPosition((PLAYER_VIEW_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2),
-			(PLAYER_VIEW_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2));
+		_playButton.setPosition((MENU_VIEW_WIDTH / 2) - (_playButton.getGlobalBounds().width / 2) + 350,
+			(MENU_VIEW_HEIGHT / 2) - (_playButton.getGlobalBounds().height / 2));
 
 	}
 
@@ -64,7 +72,7 @@ namespace ProtoEngine {
 		this->_data->window.clear();
 		//_background.set
 		this->_data->window.draw(_background);
-		this->_data->window.draw(_title);
+		//this->_data->window.draw(_title);
 		this->_data->window.draw(_playButton);
 
 		this->_data->window.display();

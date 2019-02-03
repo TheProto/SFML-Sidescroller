@@ -15,11 +15,12 @@ namespace ProtoEngine {
 		~SpriteIndex();
 
 		int IndexSpritesheet(sf::Texture &tileTexture, int borderSize, int spriteSize);
+		int getSpriteCount();
+
 		sf::Sprite getSpriteId(int id);
 	private:
 		std::vector<sf::Sprite> _SpIndex;
 		int _spriteCount;
-
 
 	};
 }

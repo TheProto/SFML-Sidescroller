@@ -87,8 +87,8 @@ namespace ProtoEngine {
 
 	sf::Sprite* LevelManager::get_tile(sf::Vector2i norm_position) {
 		
-		printf("Tilemap position requested! - X = %d, Y = %d\n",
-			norm_position.x, norm_position.y);
+		//printf("Tilemap position requested! - X = %d, Y = %d\n",
+			//norm_position.x, norm_position.y);
 
 		if ((norm_position.x < _mapSize.x && norm_position.x > -1) &&
 			(norm_position.y < _mapSize.y && norm_position.y > -1)) {
@@ -105,7 +105,54 @@ namespace ProtoEngine {
 				norm_position.x, norm_position.y);
 			return NULL;
 		}
+	
+	}
+	
+	int LevelManager::loadFromFile(std::string filename, SpriteIndex &_spriteSheet) {
+
+		std::ifstream level_file;
+		level_file.open(filename);
+
+		std::stringstream ss; 
+		std::string temp_str;
+		int temp_int;
+
+		getline(level_file, temp_str);
 		
+		ss << temp_str;
+	
+		ss >> temp_int;
+		_mapSize.x = temp_int;
+		ss >> temp_int;
+		_mapSize.y = temp_int;
+		
+		//Allocating memory
+		this->setSize(_mapSize);
+
+		for (int i = 0; i < _mapSize.y; i++) {
+		
+			getline(level_file, temp_str);
+			for (int k = 0 ; k < _mapSize.x ; k++) {
+				/*
+				switch (temp_str[k]) {
+					case '.':
+						break;
+					
+					case 'X':
+						//_tileMap[i][k] = _spriteSheet.getSpriteId(1);
+						printf("registered cube at y = %d , X= ")
+						this->AddTile(_spriteSheet.getSpriteId(1), sf::Vector2i(k, i));
+
+						break;
+				}
+				*/
+
+				if (temp_str[k] >= 65 && temp_str[k] <= 92) {
+					this->AddTile(_spriteSheet.getSpriteId(temp_str[k]-65), sf::Vector2i(k, i));
+				}
+			}
+		}
+		return 0;
 	}
 
 }

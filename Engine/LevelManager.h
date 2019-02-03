@@ -3,6 +3,9 @@
 #include <vector>
 #include <iostream>
 #include <SFML\System\Vector2.hpp>
+#include <fstream>
+#include <sstream>
+#include "SpriteIndex.h"
 
 namespace ProtoEngine {
 	
@@ -19,6 +22,7 @@ namespace ProtoEngine {
 		void DrawLevel(sf::RenderWindow &window, sf::Vector2i viewDimensions);
 		void setOrigin(sf::Vector2i);
 		void setSize(sf::Vector2i mapSize);
+		int loadFromFile(std::string filename, SpriteIndex &_spriteSheet);
 		sf::Vector2i getOrigin();
 		
 		sf::Sprite* get_tile(sf::Vector2i norm_position);
