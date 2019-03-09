@@ -22,6 +22,7 @@ namespace ProtoEngine {
 		void DrawLevel(sf::RenderWindow &window, sf::Vector2i viewDimensions);
 		void setOrigin(sf::Vector2i);
 		void setSize(sf::Vector2i mapSize);
+		sf::Vector2i getMapSize();
 		int loadFromFile(std::string filename, SpriteIndex &_spriteSheet);
 		sf::Vector2i getOrigin();
 		

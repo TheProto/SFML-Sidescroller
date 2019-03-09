@@ -155,4 +155,8 @@ namespace ProtoEngine {
 		return 0;
 	}
 
+	sf::Vector2i LevelManager::getMapSize() {
+		return _mapSize;
+	}
+
 }

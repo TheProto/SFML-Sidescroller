@@ -8,6 +8,7 @@
 #include "State.h"
 #include "Game.h"
 #include "FlipBook.h"
+#include "SpawnableEntity.h"
 
 namespace ProtoEngine {
 	class GameState : public State
@@ -31,10 +32,16 @@ namespace ProtoEngine {
 
 		sf::Sprite _background;
 		sf::Sprite _levelBackground;
+
 		SpriteIndex _spriteSheet;
 		SpriteIndex _heroSpriteSheet;
+		SpriteIndex _enemy1SpriteSheet;
+		
 		LevelManager _level;
-		MovementManager *_hero;
+		//MovementManager *_hero;
+
+		SpawnableEntity *_playerHero;
+		SpawnableEntity *_enemy1;
 
 		sf::SoundBuffer _soundBuffer;
 		sf::Sound _sound;

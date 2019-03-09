@@ -3,12 +3,12 @@
 
 namespace ProtoEngine {
 
-	MovementManager::MovementManager(float gravity, float drag, sf::Vector2f position, sf::Sprite entitySprite,
+	MovementManager::MovementManager(float gravity, float drag, sf::Vector2f position,
 		LevelManager *level_ptr) {
 		this->_gravity = gravity;
 		this->_drag = drag;
 		this->_entityPosition = position;
-		this->_entitySprite = entitySprite;
+		//this->_entitySprite = entitySprite;
 		//this->_activeEntities++;
 		this->_level_ptr = level_ptr;
 	}
@@ -46,10 +46,11 @@ namespace ProtoEngine {
 		// Calculate potential new position
 		_newEntityPosition.x = _entityPosition.x + _entityVelocity.x * dt;
 		_newEntityPosition.y = _entityPosition.y + _entityVelocity.y * dt;
-
+		
 		//Checking for collision
-		if (_entityVelocity.x <= 0)//Moving Left
+		if (_entityVelocity.x <= -0.000001f)//Moving Left
 		{
+			_goingRight = false;
 			if (_level_ptr->get_tile(sf::Vector2i(_newEntityPosition.x + 0.0f, _entityPosition.y + 0.0f)) != NULL ||
 				_level_ptr->get_tile(sf::Vector2i(_newEntityPosition.x + 0.0f, _entityPosition.y + 0.9f)) != NULL) 
 			{
@@ -57,8 +58,9 @@ namespace ProtoEngine {
 				_entityVelocity.x = 0;
 			}
 		}
-		else
+		else if (_entityVelocity.x >= 0.000001f)//Moving Right
 		{
+			_goingRight = true;
 			if (_level_ptr->get_tile(sf::Vector2i(_newEntityPosition.x + 1.0f, _entityPosition.y + 0.0f)) != NULL ||
 				_level_ptr->get_tile(sf::Vector2i(_newEntityPosition.x + 1.0f, _entityPosition.y + 0.9f)) != NULL) 
 			{
@@ -78,7 +80,7 @@ namespace ProtoEngine {
 				_entityVelocity.y = 0;
 			}
 		}
-		else
+		else //OnGround
 		{
 			if (_level_ptr->get_tile(sf::Vector2i(_newEntityPosition.x + 0.0f, _newEntityPosition.y + 1.0f)) != NULL ||
 				_level_ptr->get_tile(sf::Vector2i(_newEntityPosition.x + 0.9f, _newEntityPosition.y + 1.0f)) != NULL)
@@ -90,6 +92,14 @@ namespace ProtoEngine {
 			}
 		}
 
+		//if (_entityVelocity.x >= 0 && _entityVelocity.y == 0) {
+		if (_entityVelocity.x >= -0.5f && _entityVelocity.x <= 0.5f) {
+			_isIdle = true;
+		}
+		else {
+			_isIdle = false;
+		}
+
 		//Applying new position.
 		_entityPosition.x = _newEntityPosition.x;
 		_entityPosition.y = _newEntityPosition.y;
@@ -98,13 +108,13 @@ namespace ProtoEngine {
 		//_entitySprite.setPosition(sf::Vector2f(_level_ptr->getOrigin().x + (_entityPosition.x * _entitySprite.getGlobalBounds().width),
 			//_level_ptr->getOrigin().y + (_entityPosition.y * _entitySprite.getGlobalBounds().height)));
 
-		_entitySprite.setPosition(sf::Vector2f(_level_ptr->getOrigin().x + (_entityPosition.x * _entitySprite.getGlobalBounds().width),
-			_level_ptr->getOrigin().y + (_entityPosition.y * _entitySprite.getGlobalBounds().height)));
+//		_entitySprite.setPosition(sf::Vector2f(_level_ptr->getOrigin().x + (_entityPosition.x * _entitySprite.getGlobalBounds().width),
+//			_level_ptr->getOrigin().y + (_entityPosition.y * _entitySprite.getGlobalBounds().height)));
 	}
 
-	void MovementManager::DrawEntity(sf::RenderWindow &window) {
-		window.draw(_entitySprite);
-	}
+//	void MovementManager::DrawEntity(sf::RenderWindow &window) {
+//		window.draw(_entitySprite);
+//	}
 
 	float MovementManager::getGravity() {
 		return this->_gravity;
@@ -127,16 +137,23 @@ namespace ProtoEngine {
 		this->_entityPosition = position;
 	}
 
-	sf::Sprite MovementManager::getSprite() {
-		return this->_entitySprite;
-	}
-	void MovementManager::setSprite(sf::Sprite entitySprite) {
-		this->_entitySprite = entitySprite;
+	/*
+		sf::Sprite MovementManager::getSprite() {
+			return this->_entitySprite;
+		}
+		void MovementManager::setSprite(sf::Sprite entitySprite) {
+			this->_entitySprite = entitySprite;
+		}
+	*/
+
+	sf::Vector2f MovementManager::getEntityPosition() {
+		return this->_entityPosition;
 	}
 
 	sf::Vector2f MovementManager::getEntityVelocity() {
 		return this->_entityVelocity;
 	}
+
 	float MovementManager::getEntityVelocity_X() {
 		return this->_entityVelocity.x;
 	}
@@ -165,6 +182,18 @@ namespace ProtoEngine {
 		this->_entityVelocity.y += entityVelocity_Y;
 	}
 
+
+	bool MovementManager::isGoingRight() {
+		return _goingRight;
+	}
+	
+	bool MovementManager::isOnGronund() {
+		return _entityOnGround;
+	}
+
+	bool MovementManager::isIdle() {
+		return _isIdle;
+	}
 	//int MovementManager::getActiveEntities() {
 		//return this->_activeEntities;
 	//}

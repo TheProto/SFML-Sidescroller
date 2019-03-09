@@ -21,11 +21,13 @@
 #define GAME_VOLUME 5
 
 #define GAME_BACKGROUND_FILEPATH "Resources/res/sky.png"
-#define GAME_TEST_SPRITESHEET "Resources/res/TileSetV3.png"
+#define GAME_TEST_SPRITESHEET "Resources/res/TileSetV5.png"
 #define HERO_SPRITESHEET "Resources/res/robot_sheet3.png"
-#define LEVEL_FILE1 "Resources/LevelFile5.txt"
+#define LEVEL_FILE1 "Resources/LevelFile8.txt"
 #define GAME_AMBIENT_SOUND "Resources/audio/Fields_of_Ice.ogg"
 #define GAME_LEVEL_BACKGROUND1 "Resources/res/game_level_background2.png"
+#define GAME_ENEMY_1 "Resources/res/Slime.png"
+
 //GameOverState
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/res/sky.png"
 
