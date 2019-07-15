@@ -25,11 +25,19 @@ namespace ProtoEngine
 		sf::Font font;
 
 		if (font.loadFromFile(fileName)) {
-			this->_fonts[name] = font;
+			//this->_fonts[name] = font;
+			this->_fonts.insert(std::pair<std::string, sf::Font>(name, font));
 		}
 	}
 
 	sf::Font &AssetManager::GetFont(std::string name) {
-		return this->_fonts.at(name);
+		
+		if (_fonts.count(name) > 0) {
+			return this->_fonts.at(name);
+		}
+		else {
+			std::cout << "Could not find font file:" << name << std::endl;
+		}
+
 	}
 }

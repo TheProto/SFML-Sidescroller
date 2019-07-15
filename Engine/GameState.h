@@ -9,6 +9,7 @@
 #include "Game.h"
 #include "FlipBook.h"
 #include "SpawnableEntity.h"
+#include "PauseMenuState.h" 
 
 namespace ProtoEngine {
 	class GameState : public State
@@ -38,7 +39,7 @@ namespace ProtoEngine {
 		SpriteIndex _enemy1SpriteSheet;
 		
 		LevelManager _level;
-		//MovementManager *_hero;
+		MovementManager *_entityMovement;
 
 		SpawnableEntity *_playerHero;
 		SpawnableEntity *_enemy1;

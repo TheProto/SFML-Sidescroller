@@ -27,6 +27,8 @@
 #define GAME_AMBIENT_SOUND "Resources/audio/Fields_of_Ice.ogg"
 #define GAME_LEVEL_BACKGROUND1 "Resources/res/game_level_background2.png"
 #define GAME_ENEMY_1 "Resources/res/Slime.png"
+#define GAME_FONT_ATARIAN "Resources/fonts/Atarian/SFAtarianSystem.ttf"
+#define GAME_FONT_DEFAULT "Resources/fonts/arial.ttf"
 
 //GameOverState
 #define GAME_OVER_BACKGROUND_FILEPATH "Resources/res/sky.png"

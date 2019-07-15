@@ -17,6 +17,9 @@ namespace ProtoEngine {
 		this->_data->assets.LoadTexture("HeroSpriteSheet", HERO_SPRITESHEET);
 		this->_data->assets.LoadTexture("GameLevelBackground1", GAME_LEVEL_BACKGROUND1);
 		this->_data->assets.LoadTexture("Enemy1", GAME_ENEMY_1);
+		this->_data->assets.LoadFont("Atarian", GAME_FONT_ATARIAN);
+		this->_data->assets.LoadFont("Arial", GAME_FONT_DEFAULT);
+		this->_data->assets.GetFont("Atarian");
 
 		//_level.setSize(sf::Vector2i(20, 30));
 		//_heroAnim = new FlipBook(10);
@@ -98,13 +101,15 @@ namespace ProtoEngine {
 		_music.setVolume(GAME_VOLUME);
 		_music.play();
 
+		_entityMovement = new MovementManager(&_level);
+		//_entityMovement->addEntity(20.0f, -3.0f, sf::Vector2f(2.0f, 2.0f), &_level, 10, 3);
+		_entityMovement->addEntity(_playerHero);
+		_entityMovement->addEntity(_enemy1);
 	}
 
 	void GameState::HandleInput(float dt) {
 		//printf("Frame Time = %f\n", dt);
 		_gotInput = 0;
-		MovementManager* tempMovement;
-		tempMovement = _playerHero->getMovementMaganer();
 
 		if (++animCounter == 6) animCounter = 1;
 		//animCounter;
@@ -120,35 +125,50 @@ namespace ProtoEngine {
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 				{
-					tempMovement->addEntityVelocity_X(45 * dt);
+					_playerHero->addEntityVelocity_X(45 * dt);
 					//tempMovement->addEntityVelocity_X(1);
 				}
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 				{
-					tempMovement->addEntityVelocity_X(-45 * dt);
+					_playerHero->addEntityVelocity_X(-45 * dt);
 				}
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 				{
-					if (_playerHero->getMovementMaganer()->isOnGronund()) {
-						tempMovement->setEntityVelocity_Y(-11.0f);
+					if (_playerHero->isOnGronund()) {
+						_playerHero->setEntityVelocity_Y(-11.0f);
 					}
 				}
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 				{
-					tempMovement->setEntityVelocity_Y(6.0f);
+					_playerHero->setEntityVelocity_Y(6.0f);
 				}
 
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+				{
+					//_data->machine.AddState(StateRef(new GameState(_data)), true);
+					_data->machine.AddState(StateRef(new PauseMenuState(_data)), false);
+					break;
+					//_data->machine.ProcessStateChanges();
+				}
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+				{
+					_playerHero->setEntityVelocity_Y(0.0f);
+					_playerHero->setEntityVelocity_X(0.0f);
+					_playerHero->setPosition(sf::Vector2f(5.0f, 5.0f));
+				}
 			}
 		}
 	}
 
 	void GameState::Update(float dt) {
 		//_hero->updatePosition(dt);
-		_playerHero->UpdateEntity(dt);
-		_enemy1->UpdateEntity(dt);
+		//_playerHero->UpdateEntity(dt);
+		//_enemy1->UpdateEntity(dt);
+		_entityMovement->updateEntities(dt);
 
 	}
 
@@ -189,8 +209,9 @@ namespace ProtoEngine {
 		//tempSprite.setPosition(sf::Vector2f(20,20));
 		_level.DrawLevel(this->_data->window, sf::Vector2i(PLAYER_VIEW_HEIGHT, PLAYER_VIEW_WIDTH));
 		//this->_hero->DrawEntity(this->_data->window);
-		this->_playerHero->DrawEntity(this->_data->window);
-		this->_enemy1->DrawEntity(this->_data->window);
+		//this->_playerHero->DrawEntity(this->_data->window);
+		//this->_enemy1->DrawEntity(this->_data->window);
+		_entityMovement->drawEntities(this->_data->window);
 		
 		//this->_data->window.draw(tempSprite);
 		this->_data->window.display();
