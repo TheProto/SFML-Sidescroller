@@ -41,7 +41,7 @@ namespace ProtoEngine {
 
 	void MovementManager::updateEntities(float dt) {
 		std::vector<SpawnableEntity *>::iterator iter;
-
+		std::cout << "ActiveEntities:" << _entityVector.size()<< std::endl;
 		//temp physics variables
 
 		sf::Sprite tempEntitySprite;
@@ -64,6 +64,14 @@ namespace ProtoEngine {
 			tempVelocity = (*iter)->getEntityVelocity();
 			tempGravity = (*iter)->getGravity();
 			tempDrag = (*iter)->getDrag();
+
+			if ((*iter)->isAI()) {
+				if ((*iter)->aiGoingRight()) {
+					tempVelocity.x += 35;
+				} else {
+					tempVelocity.x -= 35;
+				}
+			}
 
 			//Calculating gravity
 			tempVelocity.y += tempGravity * dt;
@@ -98,6 +106,9 @@ namespace ProtoEngine {
 				{
 					newEntityPosition.x = (int)newEntityPosition.x + 1;
 					tempVelocity.x = 0;
+					if ((*iter)->isAI()) {
+						(*iter)->setAiGoingRight(true);
+					}
 				}
 			}
 			else if (tempVelocity.x >= 0.000001f)//Moving Right
@@ -108,6 +119,9 @@ namespace ProtoEngine {
 				{
 					newEntityPosition.x = (int)newEntityPosition.x;
 					tempVelocity.x = 0;
+					if ((*iter)->isAI()) {
+						(*iter)->setAiGoingRight(false);
+					}
 				}
 
 			}
@@ -214,6 +228,76 @@ namespace ProtoEngine {
 					_level_ptr->getOrigin().y + (tempEntityPosition.y * tempEntitySprite.getGlobalBounds().height)));
 
 				(*iter)->setEntitySprite(tempEntitySprite);
+
+				//Checking for other collisions
+				
+				std::vector<SpawnableEntity *>::iterator colIter;
+				sf::FloatRect curEntityRect(tempEntityPosition, sf::Vector2f(0.8, 0.8));
+
+				sf::Vector2f newEntityPos;
+				//std::cout << "EntityPosX:" << tempEntityPosition.x << " EntityPosY:" << tempEntityPosition.y << std::endl;
+				for (colIter = _entityVector.begin(); colIter != _entityVector.end(); colIter++) {
+					
+					if ((*iter)->getEntityId() == (*colIter)->getEntityId()) {
+						continue;
+					}
+					
+					newEntityPos = (*colIter)->getEntityPosition();
+					if (newEntityPos.x < 0 || newEntityPos.y > 26) {
+						if (!(*colIter)->isGod()) {
+							(*colIter)->setDead(true);
+							continue; 
+						}
+					}
+
+					sf::FloatRect newEntityRect(newEntityPos, sf::Vector2f(0.8, 0.8));
+
+					if (curEntityRect.intersects(newEntityRect)) {
+
+						if ((*iter)->getDestFactor() > (*colIter)->getDestFactor()) {
+							
+							if (!(*colIter)->isGod()) {
+								(*colIter)->setDead(true);
+							}
+						} else if ((*iter)->getDestFactor() < (*colIter)->getDestFactor()){
+
+							if (!(*iter)->isGod()) {
+								(*iter)->setDead(true);
+							}
+						} else {
+						    
+						}
+
+						//std::cout << "Intersects!" << std::endl;
+						if (tempEntityPosition.x > newEntityPos.x) {
+							tempEntityPosition.x = newEntityPos.x + 0.8;
+						} else {
+							tempEntityPosition.x = newEntityPos.x - 0.8;
+						}
+
+						/*
+						if (tempEntityPosition.x > newEntityPos.x) {
+
+						} else {
+
+						}
+						*/
+					}
+				}
+
+				(*iter)->setPosition(tempEntityPosition);
+				//(*iter)->setEntityVelocity(tempVelocity);
+
+		}
+
+		//Deleting killed entities
+		std::vector<SpawnableEntity *>::iterator colIter;
+		for (colIter = _entityVector.begin(); colIter != _entityVector.end(); colIter++)
+		{
+			if ((*colIter)->isDead()) {
+				_entityVector.erase(colIter);
+				colIter = _entityVector.begin();
+			}
 		}
 	}
 

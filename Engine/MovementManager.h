@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include "LevelManager.h"
 #include "SpawnableEntity.h"
 #include "FlipBook.h"

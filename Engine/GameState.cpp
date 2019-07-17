@@ -57,7 +57,8 @@ namespace ProtoEngine {
 
 		//_hero = new MovementManager(20.0f, -3.0f, sf::Vector2f(2.0f, 2.0f), _heroSpriteSheet.getSpriteId(0), &_level);
 
-		_playerHero = new SpawnableEntity(20.0f, -3.0f, sf::Vector2f(2.0f, 2.0f), &_level, 10, 3);
+		_playerHero = new SpawnableEntity(20.0f, -3.0f, sf::Vector2f(2.0f, 2.0f), &_level, 10, 3, 0, 0, 10);
+
 
 		FlipBook *tempHeroFlipBook;
 		tempHeroFlipBook = _playerHero->getFlipBook();
@@ -83,7 +84,7 @@ namespace ProtoEngine {
 		tempHeroFlipBook->addSpriteToRow(5, _heroSpriteSheet.getSpriteId(2));
 		tempHeroFlipBook->addSpriteToRow(5, _heroSpriteSheet.getSpriteId(3));
 
-		_enemy1 = new SpawnableEntity(20.0f, -3.0f, sf::Vector2f(5.0f, 2.0f), &_level, 10, 6);
+		_enemy1 = new SpawnableEntity(20.0f, -3.0f, sf::Vector2f(5.0f, 2.0f), &_level, 10, 6, 1, 1, 1);
 
 		tempHeroFlipBook = _enemy1->getFlipBook();
 
@@ -159,6 +160,69 @@ namespace ProtoEngine {
 					_playerHero->setEntityVelocity_Y(0.0f);
 					_playerHero->setEntityVelocity_X(0.0f);
 					_playerHero->setPosition(sf::Vector2f(5.0f, 5.0f));
+				}
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+				{
+					//SPawn weak slime
+					FlipBook *tempHeroFlipBook;
+					SpawnableEntity *tempEntity;
+					tempEntity = new SpawnableEntity(20.0f, -3.0f, sf::Vector2f(_playerHero->getPosition().x + 1, _playerHero->getPosition().y - 1), &_level, 10, 6, 1, 1, 1);
+					tempHeroFlipBook = tempEntity->getFlipBook();
+					for (int i = 0; i < 6; ++i) {
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(0));
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(1));
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(2));
+					}
+					_entityMovement->addEntity(tempEntity);
+				}
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+				{
+					//Spawn strong slime 
+
+					FlipBook *tempHeroFlipBook;
+					SpawnableEntity *tempEntity;
+					tempEntity = new SpawnableEntity(20.0f, -3.0f, sf::Vector2f(_playerHero->getPosition().x + 1, _playerHero->getPosition().y - 1), &_level, 10, 6, 1, 1, 2);
+					tempHeroFlipBook = tempEntity->getFlipBook();
+					for (int i = 0; i < 6; ++i) {
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(3));
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(4));
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(5));
+					}
+					_entityMovement->addEntity(tempEntity);
+				}
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+				{
+					//Spawn strong slime 
+
+					FlipBook *tempHeroFlipBook;
+					SpawnableEntity *tempEntity;
+					tempEntity = new SpawnableEntity(20.0f, -3.0f, sf::Vector2f(_playerHero->getPosition().x + 1, _playerHero->getPosition().y - 1), &_level, 10, 6, 1, 1, 3);
+					tempHeroFlipBook = tempEntity->getFlipBook();
+					for (int i = 0; i < 6; ++i) {
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(6));
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(7));
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(8));
+					}
+					_entityMovement->addEntity(tempEntity);
+				}
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+				{
+					//Spawn strong slime 
+
+					FlipBook *tempHeroFlipBook;
+					SpawnableEntity *tempEntity;
+					tempEntity = new SpawnableEntity(20.0f, -3.0f, sf::Vector2f(_playerHero->getPosition().x + 1, _playerHero->getPosition().y - 1), &_level, 10, 6, 1, 1, 4);
+					tempHeroFlipBook = tempEntity->getFlipBook();
+					for (int i = 0; i < 6; ++i) {
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(9));
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(10));
+						tempHeroFlipBook->addSpriteToRow(i, _enemy1SpriteSheet.getSpriteId(11));
+					}
+					_entityMovement->addEntity(tempEntity);
 				}
 			}
 		}

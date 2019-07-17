@@ -1,4 +1,3 @@
-#include "Box2D/Box2D.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 

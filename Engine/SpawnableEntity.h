@@ -8,7 +8,7 @@ namespace ProtoEngine {
 	public:
 
 		SpawnableEntity(float gravity, float drag, sf::Vector2f position,
-			LevelManager *level_ptr, int animationRows, int animationUpdateCounter);
+			LevelManager *level_ptr, int animationRows, int animationUpdateCounter , bool usesAI, bool isEnemy, unsigned int dest);
 		~SpawnableEntity();
 
 		//void UpdateEntity(float dt);
@@ -59,9 +59,35 @@ namespace ProtoEngine {
 		unsigned int getAnimFrameCounter();
 		void setAnimFrameCounter(unsigned int cntr);
 
+		bool isAI();
+		void setAI(bool state);
+
+		bool isEnemy();
+		void setEnemy(bool state);
+
+		bool aiGoingRight();
+		void setAiGoingRight(bool state);
+
+		unsigned int getDestFactor();
+		void setDestFactor(unsigned int factor);
+
+		bool isGod();
+		void setGod(bool state);
+
+		bool isDead();
+		void setDead(bool state);
+
 	private:
 
 		LevelManager *_level_ptr;
+
+		//Tags
+		bool _usesAI;
+		bool _Enemy;
+		bool _AiRight;
+		bool _isGod;
+		bool _isDead;
+		unsigned int _destFactor;
 
 		//Position Variables
 		unsigned long long int _entityId;

@@ -49,6 +49,8 @@ namespace ProtoEngine {
 		sf::Music _music;
 
 		FlipBook *_heroAnim;
+		FlipBook *_enemy1FlipBook;
+		FlipBook *_enemy2FlipBook;
 	};
 }
 

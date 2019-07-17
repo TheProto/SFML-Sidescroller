@@ -3,12 +3,16 @@
 namespace ProtoEngine {
 
 	SpawnableEntity::SpawnableEntity(float gravity, float drag, sf::Vector2f position,
-		LevelManager *level_ptr, int animationRows, int animUpdateFreq) 
+		LevelManager *level_ptr, int animationRows, int animUpdateFreq, bool usesAI, bool isEnemy, unsigned int dest)
 	{
-		//_moveManager = new MovementManager(gravity, drag, position, level_ptr);
 		_gravity = gravity;
 		_drag = drag;
 		_entityPosition = position;
+		_Enemy = isEnemy;
+		_usesAI = usesAI;
+		_AiRight = true;
+		_destFactor = dest;
+		_isDead = 0;
 
 		_anim = new FlipBook(animationRows);
 		_level_ptr = level_ptr;
@@ -20,71 +24,6 @@ namespace ProtoEngine {
 	SpawnableEntity::~SpawnableEntity() {
 	
 	}
-
-	/*
-	void SpawnableEntity::UpdateEntity(float dt) {
-		//_moveManager->updatePosition(dt);
-
-		//UpdateAnimation
-		if (_animFrameCounter >= _animFrameLimit) {
-			_animFrameCounter = 0;
-
-			//And is on the ground.
-			if (_moveManager->isOnGronund()) {
-				
-				//PlayingIdleAnimation
-				if (_moveManager->isIdle()) {
-					
-					if (_moveManager->isGoingRight()) {
-						//IdlingRight;
-						_entitySprite = _anim->requestSpriteByRow(4);
-						//std::cout << "RightIdleAnimation" << std::endl;
-					}
-					else {
-						//IdlingLeft;
-						_entitySprite = _anim->requestSpriteByRow(5);
-						//std::cout << "LeftIdleAnimation" << std::endl;
-					}
-					//_entitySprite = _anim->requestSpriteByRow(5);
-					//_entitySprite.setPosition(_moveManager->getEntityPosition());
-				} else {
-					if (_moveManager->isGoingRight()) {
-						//GoingRight;
-						_entitySprite = _anim->requestSpriteByRow(0);
-						//std::cout << "RightMovingAnimation" << std::endl;
-					}
-					else {
-						//GoingLeft;
-						_entitySprite = _anim->requestSpriteByRow(1);
-						//std::cout << "LeftMovingAnimation" << std::endl;
-					}
-				}
-			} else {
-				if (_moveManager->isGoingRight()) {
-					//GoingRight;
-					_entitySprite = _anim->requestSpriteByRow(2);
-					//std::cout << "RightJumpAnimation" << std::endl;
-				}
-				else {
-					//GoingLeft;
-					_entitySprite = _anim->requestSpriteByRow(3);
-					//std::cout << "LeftJumpAnimation" << std::endl;
-				}
-			}
-
-		} else {
-			_animFrameCounter++;
-		}
-
-		//_entitySprite.setPosition(_moveManager->getEntityPosition());
-
-		sf::Vector2f tempPosition;
-		tempPosition = _moveManager->getEntityPosition();
-		
-		_entitySprite.setPosition(sf::Vector2f(_level_ptr->getOrigin().x + (tempPosition.x * _entitySprite.getGlobalBounds().width),
-			_level_ptr->getOrigin().y + (tempPosition.y * _entitySprite.getGlobalBounds().height)));
-	}
-	*/
 
 	void SpawnableEntity::DrawEntity(sf::RenderWindow &window) {
 		window.draw(_entitySprite);
@@ -222,5 +161,53 @@ namespace ProtoEngine {
 
 	void SpawnableEntity::setEntitySprite(sf::Sprite sprt) {
 		this->_entitySprite = sprt;
+	}
+
+	bool SpawnableEntity::isAI() {
+		return this->_usesAI;
+	}
+	
+	void SpawnableEntity::setAI(bool state) {
+		this->_usesAI = state;
+	}
+
+	bool SpawnableEntity::isEnemy() {
+		return this->_Enemy;
+	}
+	
+	void SpawnableEntity::setEnemy(bool state) {
+		this->_Enemy = state;
+	}
+
+	bool SpawnableEntity::aiGoingRight() {
+		return _AiRight;
+	}
+	
+	void SpawnableEntity::setAiGoingRight(bool state) {
+		this->_AiRight = state;
+	}
+
+	unsigned int SpawnableEntity::getDestFactor() {
+		return _destFactor;
+	}
+	
+	void SpawnableEntity::setDestFactor(unsigned int factor) {
+		this->_destFactor = factor;
+	}
+
+	bool SpawnableEntity::isGod() {
+		return this->_isGod;
+	}
+	
+	void SpawnableEntity::setGod(bool state) {
+		this->_isGod = state;
+	}
+
+	bool SpawnableEntity::isDead() { 
+		return _isDead;
+	}
+	
+	void SpawnableEntity::setDead(bool state) {
+		this->_isDead = state;
 	}
 }
